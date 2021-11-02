@@ -2,6 +2,9 @@
 # 99067235
 
 e = 0
+prijsBolletjes = 1,10
+prijsHorrentjes = 1,25
+prijsBakje = 0,75
 
 def sorry():
     print("Sorry, zulke grote bakken hebben we niet")
@@ -23,16 +26,17 @@ while e == 0:
                     print("")
                 elif antwoord4 == "N":
                     print("Bedankt en tot ziens!")
+                    print("---------[Papi Gelato]---------")
+                    print("Bolletjes",  antwoord, "X", * prijsBolletjes, "€1.10 =", antwoord * prijsBolletjes)
+                    print("Horrentjes",  antwoord, "X", * prijsHorrentjes, "€1.25 =", antwoord * prijsHorrentjes)
+                    print("Bakje",  antwoord, "X", * prijsBakje, "€0.75 =", antwoord * prijsBakje)
                     break
                 else:
                     print("Sorry, dat snap ik niet...")
                     break
             else:
-                sorry() 
+                sorry()
         else:
             sorry()
     else:
         sorry()
-
-    
-
