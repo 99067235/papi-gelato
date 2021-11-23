@@ -1,7 +1,11 @@
 # Jurrian Schouten
 # 99067235
 
+from abc import abstractproperty
+
+
 e = 0
+i = 0
 prijsBolletjes = 1.10
 prijsHorrentjes = 1.25
 prijsBakje = 0.75
@@ -10,8 +14,11 @@ bakje = 0
 totaalBolletjes = 0
 toppingKosten = 0.00
 aantalToppings = 0
-toppingKostenCaramelHoorntje = 0.60
 lijstMetToppings = ["sr", "slagroom", "sp", "sprinkels", "cs", "caramelsaus"]
+kostenBakje = 0
+kostenHoorntje = 0
+kostenToppings = 0
+kostenBolletjes = 0
 
 def sorry():
     print("Sorry, zulke grote bakken hebben we niet")
@@ -24,7 +31,6 @@ def snapNiet():
 def topping():
         global aantalToppings
         global toppingKosten
-        global toppingKostenCaramelHoorntje
     
         toppingKeuze = input("Wat voor topping wilt u: G) Geen, SR) Slagroom, SP) Sprinkels of CS) Caramel Saus? ").lower()
         if toppingKeuze == "g":
@@ -44,7 +50,7 @@ def topping():
                     toppingKosten += 0.90
 
                 elif antwoord3 == "A":
-                    toppingKostenCaramelHoorntje += 0.60
+                    toppingKosten += 0.60
                 
                 else:
                     print("foutje")
@@ -54,79 +60,116 @@ def topping():
         else:
             snapNiet()
 
-def bon():
+def bonParticulier():
+    global kostenBakje
+    global kostenToppings
+    global kostenHoorntje
+    global kostenBolletjes
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
+    kostenBolletjes = float(totaalBolletjes * prijsBolletjes)
     print("Bolletjes:   "  ,  totaalBolletjes, "X",  prijsBolletjes,  "= €",   float(totaalBolletjes) * prijsBolletjes)
     if hoorntje >= 1:
-        print("Horrentjes:  ",  hoorntje, "X",  prijsHorrentjes, "= €",   float(totaalBolletjes) * prijsHorrentjes)
+        kostenHoorntje = hoorntje * prijsHorrentjes
+        print("Horrentjes:  ",  hoorntje, "X",  prijsHorrentjes, "= €",   kostenHoorntje)
     if bakje >= 1:
-        print("Bakje:  "     ,  bakje, "X",  prijsBakje,      "= €",   float(totaalBolletjes) * prijsBakje)
+        kostenBakje = bakje * prijsBakje
+        print("Bakje:       "     ,  bakje, "X",  prijsBakje,      "= €",   kostenBakje)
     if aantalToppings >= 1:
-        print("Topping:     "   ,  aantalToppings, "X", toppingKosten, "= €", float(aantalToppings) * toppingKosten)
+        kostenToppings = float(aantalToppings) * toppingKosten
+        print("Topping:     "   ,  aantalToppings, "X", toppingKosten, "= €", kostenToppings)
+    print("             --------------------- +")
+    print("Totaal       = €",kostenBolletjes + kostenHoorntje + kostenBakje + kostenToppings)
     e = 1
 
+def bonZakelijk():
+    global HoeveelLiter
+    prijs = HoeveelLiter * 9.80
+    btw = prijs / 100 * 9
+    print("Bedankt en tot ziens!")
+    print("---------[Papi Gelato]---------")
+    print("Liter:  ", HoeveelLiter, "X €","9,80", " = €", prijs)
+    print("             -------------- +")
+    print("Totaal               = €", prijs)
+    print("BTW (9%)             = €", btw)
 
 
 print("Welkom bij Papi Gelato")
-
-
-while e == 0:
-    bolletjes = int(input("Hoeveel bolletjes wilt u? "))
-    totaalBolletjes += bolletjes
-    if bolletjes <= 3 and bolletjes >= 0:
-        for i in range(1,bolletjes + 1):
-            print("Welke smaak wilt u voor bolletje nummer", i, "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
-            antwoord2 = input("Vul hier uw antwoord in: " ).upper()
-        if antwoord2 == "A" or antwoord2 == "C" or antwoord2 == "M" or antwoord2 == "V":
-            antwoord3 = input("Wilt u deze "+ str(bolletjes) +" bolletje(s) in A) een hoorntje of B) een bakje? ").upper()
-            if antwoord3 == "A":
-                hoorntje += 1
-                topping()
-                antwoord4 = input("Hier is uw hoorntje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
-                if antwoord4 == "Y":
-                    print("")
-                elif antwoord4 == "N":
-                    bon()
-                    break
+while i == 0:
+    particulierOfZakelijk = int(input("Bent u 1) particulier of 2) zakelijk? "))
+    if particulierOfZakelijk == 1:
+        while e == 0:
+            bolletjes = int(input("Hoeveel bolletjes wilt u? "))
+            totaalBolletjes += bolletjes
+            if bolletjes <= 3 and bolletjes >= 0:
+                for i in range(1,bolletjes + 1):
+                    print("Welke smaak wilt u voor bolletje nummer", i, "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+                    antwoord2 = input("Vul hier uw antwoord in: " ).upper()
+                if antwoord2 == "A" or antwoord2 == "C" or antwoord2 == "M" or antwoord2 == "V":
+                    antwoord3 = input("Wilt u deze "+ str(bolletjes) +" bolletje(s) in A) een hoorntje of B) een bakje? ").upper()
+                    if antwoord3 == "A":
+                        hoorntje += 1
+                        topping()
+                        antwoord4 = input("Hier is uw hoorntje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
+                        if antwoord4 == "Y":
+                            print("")
+                        elif antwoord4 == "N":
+                            bonParticulier()
+                            break
+                        else:
+                            snapNiet()
+                    elif antwoord3 == "B":
+                        bakje += 1
+                        topping()
+                        antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
+                        if antwoord4 == "Y":
+                            print("")
+                        elif antwoord4 == "N":
+                            bonParticulier()
+                            break
+                        else:
+                            print("Sorry, dat snap ik niet...")
+                            break
+                    else:
+                        snapNiet()
                 else:
                     snapNiet()
-            elif antwoord3 == "B":
+            elif bolletjes >= 3 and bolletjes <= 8:
+                print("Dan krijgt u van mij een bakje met", bolletjes, "bolletjes")
                 bakje += 1
-                topping()
-                antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
-                if antwoord4 == "Y":
-                    print("")
-                elif antwoord4 == "N":
-                    bon()
-                    break
+                for i in range(1,bolletjes + 1):
+                    print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+                    smaak = input("Vul hier uw antwoord in: " ).upper()
+                if smaak == "A" or smaak == "C" or smaak == "M" or smaak == "V":
+                    topping()
+                    antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
+                    if antwoord4 == "Y":
+                        print("")
+                    elif antwoord4 == "N":
+                        bonParticulier()
+                        e = 1
+                    else:
+                        snapNiet()
                 else:
-                    print("Sorry, dat snap ik niet...")
-                    break
-            else:
-                snapNiet()
-        else:
-            snapNiet()
-    elif bolletjes >= 3 and bolletjes <= 8:
-        print("Dan krijgt u van mij een bakje met", bolletjes, "bolletjes")
-        bakje += 1
-        for i in range(1,bolletjes + 1):
-            print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
-            smaak = input("Vul hier uw antwoord in: " ).upper()
-        if smaak == "A" or smaak == "C" or smaak == "M" or smaak == "V":
-            topping()
-            antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
-            if antwoord4 == "Y":
-                print("")
-            elif antwoord4 == "N":
-                bon()
-                e = 1
-            else:
-                snapNiet()
-        else:
-            snapNiet()
+                    snapNiet()
 
-    elif bolletjes > 8:
-        sorry()
+            elif bolletjes > 8:
+                sorry()
+            else:
+                snapNiet()
+
+    elif particulierOfZakelijk == 2:
+        HoeveelLiter = int(input("Hoeveel liter ijs wilt u bestellen? "))
+        if HoeveelLiter >= 1:
+            for f in range(1, HoeveelLiter + 1):
+                print("Welke smaak wilt u voor liter", (f), "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+                welkeSmaak = input("Vul hier uw antwoord in: ").upper()
+            if welkeSmaak == "A" or welkeSmaak == "C" or welkeSmaak == "M" or welkeSmaak == "V":
+                bonZakelijk()
+                break
+            else:
+                snapNiet()
+        else:
+            snapNiet()
     else:
         snapNiet()
