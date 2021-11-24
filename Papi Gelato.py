@@ -1,8 +1,8 @@
 # Jurrian Schouten
 # 99067235
 
-from abc import abstractproperty
-
+import time
+import webbrowser
 
 e = 0
 i = 0
@@ -24,7 +24,7 @@ def sorry():
     print("Sorry, zulke grote bakken hebben we niet")
 
 def snapNiet():
-    print("Sorry, dat snap ik niet...")
+    print("Sorry, dat is geen optie die we aanbieden...")
 
 
 
@@ -93,6 +93,26 @@ def bonZakelijk():
     print("Totaal               = €", prijs)
     print("BTW (9%)             = €", btw)
 
+def test():
+    global bakje
+    print("Dan krijgt u van mij een bakje met", bolletjes, "bolletjes")
+    bakje += 1
+    for i in range(1,bolletjes + 1):
+        print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+        smaak = input("Vul hier uw antwoord in: " ).upper()
+    if smaak == "A" or smaak == "C" or smaak == "M" or smaak == "V":
+        topping()
+        antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
+        if antwoord4 == "Y":
+            print("")
+        elif antwoord4 == "N":
+            bonParticulier()
+            e = 1
+        else:
+            snapNiet()
+    else:
+        snapNiet()
+
 
 print("Welkom bij Papi Gelato")
 while i == 0:
@@ -128,7 +148,7 @@ while i == 0:
                             bonParticulier()
                             break
                         else:
-                            print("Sorry, dat snap ik niet...")
+                            sorry()
                             break
                     else:
                         snapNiet()
@@ -152,7 +172,13 @@ while i == 0:
                         snapNiet()
                 else:
                     snapNiet()
-
+            elif bolletjes <= 0:
+                print("U snapt dus niet dat minder bolletjes dan 1 kopen niet kan.")
+                time.sleep(1)
+                print("Doe anders meteen de IQ test:")
+                time.sleep(2)
+                webbrowser.open("www.iqtestacademy.org")
+                break
             elif bolletjes > 8:
                 sorry()
             else:
@@ -162,13 +188,20 @@ while i == 0:
         HoeveelLiter = int(input("Hoeveel liter ijs wilt u bestellen? "))
         if HoeveelLiter >= 1:
             for f in range(1, HoeveelLiter + 1):
-                print("Welke smaak wilt u voor liter", (f), "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+                print("Welke smaak wilt u voor liter", (f), "A) Aardbei, C) Chocolade, of V) Vanille?")
                 welkeSmaak = input("Vul hier uw antwoord in: ").upper()
             if welkeSmaak == "A" or welkeSmaak == "C" or welkeSmaak == "M" or welkeSmaak == "V":
                 bonZakelijk()
                 break
             else:
                 snapNiet()
+        elif HoeveelLiter <= 0:
+            print("U snapt dus niet dat minder bolletjes dan 1 kopen niet kan.")
+            time.sleep(1)
+            print("Doe anders meteen de IQ test:")
+            time.sleep(2)
+            webbrowser.open("www.iqtestacademy.org")
+            break
         else:
             snapNiet()
     else:
