@@ -98,7 +98,7 @@ def test():
     print("Dan krijgt u van mij een bakje met", bolletjes, "bolletjes")
     bakje += 1
     for i in range(1,bolletjes + 1):
-        print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+        print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, of V) Vanille?")
         smaak = input("Vul hier uw antwoord in: " ).upper()
     if smaak == "A" or smaak == "C" or smaak == "M" or smaak == "V":
         topping()
@@ -123,7 +123,7 @@ while i == 0:
             totaalBolletjes += bolletjes
             if bolletjes <= 3 and bolletjes >= 0:
                 for i in range(1,bolletjes + 1):
-                    print("Welke smaak wilt u voor bolletje nummer", i, "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+                    print("Welke smaak wilt u voor bolletje nummer", i, "A) Aardbei, C) Chocolade, of V) Vanille?")
                     antwoord2 = input("Vul hier uw antwoord in: " ).upper()
                 if antwoord2 == "A" or antwoord2 == "C" or antwoord2 == "M" or antwoord2 == "V":
                     antwoord3 = input("Wilt u deze "+ str(bolletjes) +" bolletje(s) in A) een hoorntje of B) een bakje? ").upper()
@@ -158,7 +158,7 @@ while i == 0:
                 print("Dan krijgt u van mij een bakje met", bolletjes, "bolletjes")
                 bakje += 1
                 for i in range(1,bolletjes + 1):
-                    print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, M) Munt of V) Vanille?")
+                    print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, of V) Vanille?")
                     smaak = input("Vul hier uw antwoord in: " ).upper()
                 if smaak == "A" or smaak == "C" or smaak == "M" or smaak == "V":
                     topping()
