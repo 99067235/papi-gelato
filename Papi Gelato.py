@@ -6,7 +6,7 @@ import webbrowser
 
 e = 0
 i = 0
-prijsBolletjes = 1.10
+prijsBolletjes = 0.95
 prijsHorrentjes = 1.25
 prijsBakje = 0.75
 hoorntje = 0
