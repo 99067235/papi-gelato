@@ -85,13 +85,13 @@ def bonParticulier():
 def bonZakelijk():
     global HoeveelLiter
     prijs = HoeveelLiter * 9.80
-    btw = prijs / 100 * 9
+    btw = prijs / 100 * 6
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
     print("Liter:  ", HoeveelLiter, "X €","9,80", " = €", prijs)
     print("             -------------- +")
     print("Totaal               = €", prijs)
-    print("BTW (9%)             = €", btw)
+    print("BTW (6%)             = €", btw)
 
 def test():
     global bakje
