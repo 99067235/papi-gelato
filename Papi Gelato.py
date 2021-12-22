@@ -111,6 +111,7 @@ def bakjeGekozen(bolletjes):
     antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
     if antwoord4 == "Y":
         print("")
+        aantalbolletjes()
     elif antwoord4 == "N":
         bonParticulier()
         exit()
@@ -122,6 +123,7 @@ def hoorntjeMeerbestellen(bolletjes):
     antwoord4 = input("Hier is uw hoorntje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
     if antwoord4 == "Y":
         print("")
+        aantalbolletjes()
     elif antwoord4 == "N":
         bonParticulier()
         exit()
@@ -162,6 +164,7 @@ def bakjeMeerBestellen(bolletjes):
     antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
     if antwoord4 == "Y":
         print("")
+        aantalbolletjes()
     elif antwoord4 == "N":
         bonParticulier()
         exit()
@@ -221,12 +224,9 @@ def hoeveelLiter():
             for f in range(1, HoeveelLiter + 1):
                 print("Welke smaak wilt u voor liter", (f), "A) Aardbei, C) Chocolade, of V) Vanille?")
                 welkeSmaak = input("Vul hier uw antwoord in: ").upper()
-                if welkeSmaak != "A" and smaak != "C" and smaak != "V":
-                    HoeveelLiter = 0
+                if welkeSmaak != "A" and welkeSmaak != "C" and welkeSmaak != "M" and welkeSmaak != "V":
                     snapNiet()
                     hoeveelLiter()
-                elif welkeSmaak == "A" and smaak == "C" and smaak == "V":
-                    print("")
             bonZakelijk()
 
         elif HoeveelLiter <= 0:
