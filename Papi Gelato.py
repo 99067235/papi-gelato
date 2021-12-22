@@ -59,10 +59,6 @@ def topping(bolletjes):
 
             elif antwoord3 == "A":
                 toppingKosten += 0.60
-            
-            else:
-                print("foutje")
-
         else:
             snapNiet()
     else:
@@ -229,7 +225,7 @@ def hoeveelLiter():
                     HoeveelLiter = 0
                     snapNiet()
                     hoeveelLiter()
-                elif welkeSmaak != "A" and smaak != "C" and smaak != "V":
+                elif welkeSmaak == "A" and smaak == "C" and smaak == "V":
                     print("")
             bonZakelijk()
 
