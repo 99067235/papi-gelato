@@ -1,8 +1,4 @@
-from functools import total_ordering
-import time
-from tkinter.tix import Tree
-from tracemalloc import Snapshot
-import webbrowser
+
 
 e = 0
 i = 0
@@ -26,6 +22,7 @@ antwoord3 = ""
 Btw = 6
 btwprijs = 0
 lijstmetBesteldeSmaken = []
+gekozenbakje = False
 
 def sorry():
     print("Sorry, zulke grote bakken hebben we niet")
@@ -144,6 +141,7 @@ def hoorntjeMeerbestellen(bolletjes):
 def keuzeVerpakking(bolletjes):
     global hoorntje
     global antwoord3
+    global bakje
     antwoord3 = input("Wilt u deze "+ str(bolletjes) +" bolletje(s) in A) een hoorntje of B) een bakje? ").upper()
     if antwoord3 == "A":
         hoorntje += 1
@@ -184,7 +182,6 @@ def welkeSmaakGroot(bolletjes):
     global bakje
     global smaak
     global antwoord3
-
     roundsLoop = 1
     while roundsLoop != bolletjes + 1:
         print("Welke smaak wilt u voor bolletje nummer", str(roundsLoop), "A) Aardbei, C) Chocolade, of V) Vanille?")
@@ -193,7 +190,6 @@ def welkeSmaakGroot(bolletjes):
             roundsLoop += 1
         else:
             snapNiet()
-
     bakjeMeerBestellen(bolletjes)
 
 
@@ -211,8 +207,7 @@ def aantalbolletjes():
             totaalBolletjes += bolletjes
             print("Dan krijgt u van mij een bakje met", bolletjes, "bolletjes")
             bakje += 1
-            kostenBakje + prijsBakje
-            antwoord3 == "B"
+            antwoord3 = "B"
             welkeSmaakGroot(bolletjes)
         elif bolletjes <= 0:
             print("Helaas verkopen wij geen hoorntjes of bakjes met minder dan 1 bolletje.")
