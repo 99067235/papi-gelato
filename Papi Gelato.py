@@ -1,7 +1,7 @@
-# Jurrian Schouten
-# 99067235
-
+from functools import total_ordering
 import time
+from tkinter.tix import Tree
+from tracemalloc import Snapshot
 import webbrowser
 
 e = 0
@@ -25,7 +25,7 @@ smaak = ""
 antwoord3 = ""
 Btw = 6
 btwprijs = 0
-
+lijstmetBesteldeSmaken = []
 
 def sorry():
     print("Sorry, zulke grote bakken hebben we niet")
@@ -72,36 +72,47 @@ def bonParticulier():
     global kostenBolletjes
     global i
     global e
+    my_formatter = "{0:.2f}"
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
+    #formatten kosten bolletjes
     kostenBolletjes = float(totaalBolletjes * prijsBolletjes)
-    print("Bolletjes:   "  ,  totaalBolletjes, "X",  prijsBolletjes,  "= €",   float(totaalBolletjes) * prijsBolletjes)
+    formatted_PrijsBolletjes = float(totaalBolletjes) * prijsBolletjes
+    bonPrijsBolletjes = my_formatter.format(formatted_PrijsBolletjes)
+    print("Bolletjes:   "  ,  totaalBolletjes, "X",  prijsBolletjes,  "= €",   bonPrijsBolletjes)
+    #formatten kosten hoorntje
+    kostenHoorntje = hoorntje * prijsHorrentjes
+    BonprijsHoorntje = my_formatter.format(kostenHoorntje)
     if hoorntje >= 1:
-        kostenHoorntje = hoorntje * prijsHorrentjes
-        print("Horrentjes:  ",  hoorntje, "X",  prijsHorrentjes, "= €",   kostenHoorntje)
+        print("Horrentjes:  ",  hoorntje, "X",  prijsHorrentjes, "= €",   BonprijsHoorntje)
+    #formatten kosten bakje
+    kostenBakje = bakje * prijsBakje
+    BonprijsBakje = my_formatter.format(kostenBakje)
     if bakje >= 1:
-        kostenBakje = bakje * prijsBakje
-        print("Bakje:       "     ,  bakje, "X",  prijsBakje,      "= €",   kostenBakje)
+        print("Bakje:       "     ,  bakje, "X",  prijsBakje,      "= €",   BonprijsBakje)
+    #formatten prijs toppings
+    BonPrijsToppings = my_formatter.format(toppingKosten)
     if aantalToppings >= 1:
         kostenToppings = float(aantalToppings) * toppingKosten
-        print("Topping:     "   ,  aantalToppings, "X", toppingKosten, "= €", kostenToppings)
+        print("Topping:     "   ,  aantalToppings, "X", toppingKosten, "= €", BonPrijsToppings)
     print("             --------------------- +")
-    print("Totaal       = €",kostenBolletjes + kostenHoorntje + kostenBakje + kostenToppings)
-    i = 1
-    e = 1
+    formatted_total = kostenBolletjes + kostenHoorntje + kostenBakje + kostenToppings
+    total = my_formatter.format(formatted_total)
+    print("Totaal       = €",total)
+    exit()
 
 def bonZakelijk():
     global HoeveelLiter
     global i
     prijs = HoeveelLiter * 9.80
-    btw = prijs / 100 * 6
+    btw = prijs / 100 * 9
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
     print("Liter:  ", HoeveelLiter, "X €","9,80", " = €", prijs)
     print("             -------------- +")
     print("Totaal               = €", prijs)
     btwprijs = round(float(prijs/100 * Btw),2)
-    print("BTW (6%)             = €", btwprijs)
+    print("BTW (9%)             = €", btwprijs)
     exit()
 
 def bakjeGekozen(bolletjes):
@@ -126,7 +137,6 @@ def hoorntjeMeerbestellen(bolletjes):
         aantalbolletjes()
     elif antwoord4 == "N":
         bonParticulier()
-        exit()
     else:
         snapNiet()
         hoorntjeMeerbestellen()
@@ -146,17 +156,15 @@ def keuzeVerpakking(bolletjes):
         keuzeVerpakking(bolletjes)
 
 def welkeSmaak(bolletjes):
-    try:
-        for i in range(1,bolletjes + 1):
-            print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, of V) Vanille?")
-            smaak = input("Vul hier uw antwoord in: " ).upper()
-            if smaak != "A" and smaak != "C" and smaak != "M" and smaak != "V":
-                snapNiet()
-                welkeSmaak(bolletjes)
-        keuzeVerpakking(bolletjes)
-    except ValueError:
-        snapNiet()
-        welkeSmaak(bolletjes)
+    roundsLoop = 1
+    while roundsLoop != bolletjes + 1:
+        print("Welke smaak wilt u voor bolletje nummer", str(roundsLoop), "A) Aardbei, C) Chocolade, of V) Vanille?")
+        smaak = input("Vul hier uw antwoord in: " ).upper()
+        if smaak == "A" or smaak == "C" or smaak == "M" or smaak == "V":
+            roundsLoop += 1
+        else:
+            snapNiet()
+    keuzeVerpakking(bolletjes)
 
 def bakjeMeerBestellen(bolletjes):
     global antwoord3
@@ -176,23 +184,24 @@ def welkeSmaakGroot(bolletjes):
     global bakje
     global smaak
     global antwoord3
-    try:
-        for i in range(1,bolletjes + 1):
-            print("Welke smaak wilt u voor bolletje nummer", str(i), "A) Aardbei, C) Chocolade, of V) Vanille?")
-            smaak = input("Vul hier uw antwoord in: " ).upper()
-            if smaak != "A" and smaak != "C" and smaak != "M" and smaak != "V":
-                bakje = 1
-                snapNiet()
-                welkeSmaakGroot(bolletjes)
-        bakjeMeerBestellen(bolletjes)
-    except ValueError:
-        snapNiet()
-        welkeSmaakGroot()
+
+    roundsLoop = 1
+    while roundsLoop != bolletjes + 1:
+        print("Welke smaak wilt u voor bolletje nummer", str(roundsLoop), "A) Aardbei, C) Chocolade, of V) Vanille?")
+        smaak = input("Vul hier uw antwoord in: " ).upper()
+        if smaak == "A" or smaak == "C" or smaak == "M" or smaak == "V":
+            roundsLoop += 1
+        else:
+            snapNiet()
+
+    bakjeMeerBestellen(bolletjes)
 
 
 def aantalbolletjes():
     global totaalBolletjes
     global antwoord3
+    global bakje
+    global kostenBakje
     try:
         bolletjes = int(input("Hoeveel bolletjes wilt u? "))
         if bolletjes <= 3 and bolletjes >= 0:
@@ -201,6 +210,9 @@ def aantalbolletjes():
         elif bolletjes > 3 and bolletjes <= 8:
             totaalBolletjes += bolletjes
             print("Dan krijgt u van mij een bakje met", bolletjes, "bolletjes")
+            bakje += 1
+            kostenBakje + prijsBakje
+            antwoord3 == "B"
             welkeSmaakGroot(bolletjes)
         elif bolletjes <= 0:
             print("Helaas verkopen wij geen hoorntjes of bakjes met minder dan 1 bolletje.")
@@ -228,7 +240,6 @@ def hoeveelLiter():
                     snapNiet()
                     hoeveelLiter()
             bonZakelijk()
-
         elif HoeveelLiter <= 0:
             print("Helaas verkopen wij geen hoorntjes of bakjes met minder dan 1 bolletje.")
         else:
