@@ -1,6 +1,4 @@
-from operator import truediv
 from pickle import TRUE
-
 
 e = 0
 i = 0
@@ -95,7 +93,7 @@ def bonParticulier():
     if aantalToppings >= 1:
         kostenToppings = float(aantalToppings) * toppingKosten
         print("Topping:     "   ,  aantalToppings, "X", toppingKosten, "= €", BonPrijsToppings)
-    print("             --------------------- +")
+    print("             ---------------- +")
     formatted_total = kostenBolletjes + kostenHoorntje + kostenBakje + kostenToppings
     total = my_formatter.format(formatted_total)
     print("Totaal       = €",total)
@@ -115,7 +113,7 @@ def bonZakelijk():
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
     print("Liter:  ", HoeveelLiterkeuze, "X €","9,80", " = €", formatted_prijsZakelijk)
-    print("             -------------- +")
+    print("             ---------------- +")
     print("Totaal               = €", formatted_prijsZakelijk)
     print("BTW (9%)             = €", formatted_btw)
     exit()
