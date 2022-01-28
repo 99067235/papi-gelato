@@ -1,3 +1,5 @@
+from operator import truediv
+from pickle import TRUE
 
 
 e = 0
@@ -23,6 +25,7 @@ Btw = 6
 btwprijs = 0
 lijstmetBesteldeSmaken = []
 gekozenbakje = False
+a = True
 
 def sorry():
     print("Sorry, zulke grote bakken hebben we niet")
@@ -72,22 +75,22 @@ def bonParticulier():
     my_formatter = "{0:.2f}"
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
-    #formatten kosten bolletjes
+    #formatteren kosten bolletjes
     kostenBolletjes = float(totaalBolletjes * prijsBolletjes)
     formatted_PrijsBolletjes = float(totaalBolletjes) * prijsBolletjes
     bonPrijsBolletjes = my_formatter.format(formatted_PrijsBolletjes)
     print("Bolletjes:   "  ,  totaalBolletjes, "X",  prijsBolletjes,  "= €",   bonPrijsBolletjes)
-    #formatten kosten hoorntje
+    #formatteren kosten hoorntje
     kostenHoorntje = hoorntje * prijsHorrentjes
     BonprijsHoorntje = my_formatter.format(kostenHoorntje)
     if hoorntje >= 1:
         print("Horrentjes:  ",  hoorntje, "X",  prijsHorrentjes, "= €",   BonprijsHoorntje)
-    #formatten kosten bakje
+    #formatteren kosten bakje
     kostenBakje = bakje * prijsBakje
     BonprijsBakje = my_formatter.format(kostenBakje)
     if bakje >= 1:
         print("Bakje:       "     ,  bakje, "X",  prijsBakje,      "= €",   BonprijsBakje)
-    #formatten prijs toppings
+    #formatteren prijs toppings
     BonPrijsToppings = my_formatter.format(toppingKosten)
     if aantalToppings >= 1:
         kostenToppings = float(aantalToppings) * toppingKosten
@@ -101,15 +104,20 @@ def bonParticulier():
 def bonZakelijk():
     global HoeveelLiter
     global i
-    prijs = HoeveelLiter * 9.80
+    my_formatter = "{0:.2f}"
+    prijs = HoeveelLiterkeuze * 9.80
     btw = prijs / 100 * 9
+    btwprijs = round(float(prijs/100 * Btw),2)
+    #formatteren totaal
+    formatted_prijsZakelijk = my_formatter.format(prijs)
+    #formatteren btw
+    formatted_btw = my_formatter.format(btwprijs)
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
-    print("Liter:  ", HoeveelLiter, "X €","9,80", " = €", prijs)
+    print("Liter:  ", HoeveelLiterkeuze, "X €","9,80", " = €", formatted_prijsZakelijk)
     print("             -------------- +")
-    print("Totaal               = €", prijs)
-    btwprijs = round(float(prijs/100 * Btw),2)
-    print("BTW (9%)             = €", btwprijs)
+    print("Totaal               = €", formatted_prijsZakelijk)
+    print("BTW (9%)             = €", formatted_btw)
     exit()
 
 def bakjeGekozen(bolletjes):
@@ -136,7 +144,7 @@ def hoorntjeMeerbestellen(bolletjes):
         bonParticulier()
     else:
         snapNiet()
-        hoorntjeMeerbestellen()
+        hoorntjeMeerbestellen(bolletjes)
 
 def keuzeVerpakking(bolletjes):
     global hoorntje
@@ -166,17 +174,21 @@ def welkeSmaak(bolletjes):
 
 def bakjeMeerBestellen(bolletjes):
     global antwoord3
+    global a
     topping(bolletjes)
-    antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
-    if antwoord4 == "Y":
-        print("")
-        aantalbolletjes()
-    elif antwoord4 == "N":
-        bonParticulier()
-        exit()
-    else:
-        snapNiet()
-        bakjeMeerBestellen(bolletjes)
+    while a == True:
+        antwoord4 = input("Hier is uw bakje met "+ str(bolletjes) +" bolletje(s). Wilt u nog meer bestellen? (Y/N)").upper()
+        if antwoord4 == "Y":
+            a = False
+            print("")
+            aantalbolletjes()
+        elif antwoord4 == "N":
+            a = False
+            bonParticulier()
+            exit()
+        else:
+            snapNiet()
+            a = True
 
 def welkeSmaakGroot(bolletjes):
     global bakje
@@ -191,7 +203,6 @@ def welkeSmaakGroot(bolletjes):
         else:
             snapNiet()
     bakjeMeerBestellen(bolletjes)
-
 
 def aantalbolletjes():
     global totaalBolletjes
@@ -223,26 +234,25 @@ def aantalbolletjes():
         snapNiet()
         aantalbolletjes()
 
-def hoeveelLiter():
-    global HoeveelLiter
-    try:
-        HoeveelLiter = int(input("Hoeveel liter ijs wilt u bestellen? "))
-        if HoeveelLiter >= 1:
-            for f in range(1, HoeveelLiter + 1):
-                print("Welke smaak wilt u voor liter", (f), "A) Aardbei, C) Chocolade, of V) Vanille?")
-                welkeSmaak = input("Vul hier uw antwoord in: ").upper()
-                if welkeSmaak != "A" and welkeSmaak != "C" and welkeSmaak != "M" and welkeSmaak != "V":
-                    snapNiet()
-                    hoeveelLiter()
-            bonZakelijk()
-        elif HoeveelLiter <= 0:
-            print("Helaas verkopen wij geen hoorntjes of bakjes met minder dan 1 bolletje.")
-        else:
-            snapNiet()
-    except ValueError:
-        snapNiet()
-        hoeveelLiter()
 
+def litersIjs():
+    global HoeveelLiterkeuze
+    roundsLoop = 1
+    HoeveelLiterkeuze = int(input("Hoeveel liter ijs wilt u bestellen? "))
+    if HoeveelLiterkeuze >= 1:
+        while roundsLoop != HoeveelLiterkeuze + 1:
+            print("Welke smaak wilt u voor liter", str(roundsLoop), "A) Aardbei, C) Chocolade, of V) Vanille?")
+            welkeSmaak = input("Vul hier uw antwoord in: ").upper()
+            if welkeSmaak == "A" or welkeSmaak == "C" or welkeSmaak == "M" or welkeSmaak == "V":
+                roundsLoop += 1
+            else:
+                snapNiet()
+        bonZakelijk()
+    elif HoeveelLiterkeuze <= 0:
+        print("Helaas verkopen wij geen lege bakken ijs...")
+    else:
+        snapNiet()
+    
 def welkom():
     global i
     global antwoord3
@@ -252,7 +262,7 @@ def welkom():
         if particulierOfZakelijk == "p" or particulierOfZakelijk == "particulier":
             aantalbolletjes()
         elif particulierOfZakelijk == "z" or particulierOfZakelijk == "zakelijk":
-            hoeveelLiter()
+            litersIjs()
         else:
             snapNiet()
 
