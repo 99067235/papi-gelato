@@ -110,12 +110,13 @@ def bonZakelijk():
     formatted_prijsZakelijk = my_formatter.format(prijs)
     #formatteren btw
     formatted_btw = my_formatter.format(btwprijs)
+    berekeningBtw = round(float(formatted_prijsZakelijk)) / 100 * 9
     print("Bedankt en tot ziens!")
     print("---------[Papi Gelato]---------")
     print("Liter:  ", HoeveelLiterkeuze, "X €","9,80", " = €", formatted_prijsZakelijk)
     print("             ---------------- +")
     print("Totaal               = €", formatted_prijsZakelijk)
-    print("BTW (9%)             = €", formatted_btw)
+    print("BTW (9%)             = €", berekeningBtw)
     exit()
 
 def bakjeGekozen(bolletjes):
